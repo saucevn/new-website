@@ -1,4 +1,5 @@
 .root {
+  margin-top: 90px;
   @media (width > 900px) {
     display: flex;
     align-items: center;
@@ -12,7 +13,7 @@
 
 .left {
   position: relative;
-  max-width: 600px;
+  max-width: 300px;
   margin: 0 auto rfs(70px) auto;
 
   @media (width > 900px) {
@@ -21,24 +22,9 @@
 }
 
 .chrometop {
-  position: relative;
-  z-index: 2;
+  display: flex;
+  justify-content: center;
 }
-
-.chromebottom {
-  position: absolute;
-  top: -40px;
-  left: 20px;
-  right: 20px;
-
-  @media (width > 900px) {
-    top: -40px;
-    left: 20px;
-    right: auto;
-    width: 100%;
-  }
-}
-
 .code {
   background-color: #282d3f;
   max-width: 600px;

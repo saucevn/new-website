@@ -81,18 +81,8 @@ export const getStaticProps = handleErrors(
               url
             }
           }
-          docsUrl
-          demo {
-            code
-            githubRepo
-            screenshot {
-              responsiveImage(
-                imgixParams: { w: 600, h: 400, fit: crop, crop: top }
-              ) {
-                ...imageFields
-              }
-            }
-          }
+          invertCtaColor
+          shopifyProduct
           content {
             ... on LandingCdnMapBlockRecord {
               title { value }
@@ -159,7 +149,6 @@ export const getStaticProps = handleErrors(
               content { value }
             }
           }
-          seoH1
           yoastAnalysis
         }
       }
@@ -247,13 +236,14 @@ export default function UseCase({ subscription, websites, preview }) {
   const seoAnalysis = landing && landing.yoastAnalysis;
   const keyword = seoAnalysis.keyword;
 
+  const shopifyProduct = JSON.parse(landing.shopifyProduct);
+
   return (
     <Layout preview={preview}>
       {landing && (
         <>
           <Head seo={landing.seo} slug={landing.slug} />
           <Hero
-            kicker={landing.seoH1}
             seoAnalysis={seoAnalysis}
             image={
               <LazyImage
@@ -268,18 +258,17 @@ export default function UseCase({ subscription, websites, preview }) {
             title={highlightStructuredText(landing.title)}
             subtitle={landing.subtitle}
           >
-            {landing.demo && (
-              <Checks checks={['Best practices', '30s setup']}>
-                <Button
-                  fs="big"
-                  as="a"
-                  title={keyword}
-                  href={`https://dashboard.datocms.com/deploy?repo=${landing.demo.githubRepo}`}
-                >
-                  Try our {landing.name} demo project now!
-                </Button>
-              </Checks>
-            )}
+            <Checks checks={['Best practices', '30s setup']}>
+              <Button
+                fs="big"
+                as="a"
+                s={landing.invertCtaColor ? 'invert' : undefined}
+                title={keyword}
+                href="#"
+              >
+                Purchase {landing.name} now!
+              </Button>
+            </Checks>
           </Hero>
 
           {websites.length > 0 && (
@@ -529,16 +518,12 @@ export default function UseCase({ subscription, websites, preview }) {
                 {block._modelApiKey === 'quote_link' && (
                   <Quote review={block.quote} />
                 )}
-                {block._modelApiKey === 'try_demo_block' && landing.demo && (
+                {block._modelApiKey === 'try_demo_block' && shopifyProduct && (
                   <>
                     <TryDemoCta
-                      image={landing.demo.screenshot.responsiveImage}
                       title={highlightStructuredText(block.title)}
-                      windowTitle={`${landing.name} + DatoCMS demo`}
                       description={<StructuredText data={block.content} />}
-                      href={`https://dashboard.datocms.com/deploy?repo=${landing.demo.githubRepo}`}
-                      docsAs={landing.docsUrl}
-                      cta={`Try our ${landing.name} demo project now!`}
+                      shopifyProduct={shopifyProduct}
                     />
                     <Space top={2} bottom={2}>
                       <LogosBar
