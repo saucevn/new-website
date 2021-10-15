@@ -205,6 +205,7 @@ export const getStaticProps = handleErrors(
         subscription: preview
           ? {
               ...gqlRequest,
+              environment: 'pepsi',
               token: process.env.NEXT_PUBLIC_DATOCMS_READONLY_TOKEN,
               enabled: true,
               initialData: data,
