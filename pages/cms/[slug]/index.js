@@ -236,7 +236,8 @@ export default function UseCase({ subscription, websites, preview }) {
   const seoAnalysis = landing && landing.yoastAnalysis;
   const keyword = seoAnalysis.keyword;
 
-  const shopifyProduct = shopifyProduct && JSON.parse(landing.shopifyProduct);
+  const shopifyProduct =
+    landing.shopifyProduct && JSON.parse(landing.shopifyProduct);
 
   return (
     <Layout preview={preview}>
