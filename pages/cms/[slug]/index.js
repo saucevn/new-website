@@ -205,7 +205,7 @@ export const getStaticProps = handleErrors(
         subscription: preview
           ? {
               ...gqlRequest,
-              environment: 'inter',
+              environment: 'custom-landing-pages',
               token: process.env.NEXT_PUBLIC_DATOCMS_READONLY_TOKEN,
               enabled: true,
               initialData: data,
